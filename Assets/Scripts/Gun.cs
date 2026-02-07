@@ -1,84 +1,81 @@
 using UnityEngine;
-using ArenaSurvival.UI;
 
 
-namespace ArenaSurvival.Combat
+
+
+public class Gun : MonoBehaviour
 {
-    public class Gun : MonoBehaviour
+    [Header("References")]
+    [SerializeField] private Camera playerCamera;
+
+    [Header("Shooting")]
+    [SerializeField] private float damage = 25f;
+    [SerializeField] private float range = 200f;
+    [SerializeField] private float fireRate = 8f; // bullets per second
+    [SerializeField] private LayerMask hitMask = ~0; // everything by default
+
+    [Header("Debug")]
+    [SerializeField] private bool drawDebugRay = true;
+
+    [SerializeField] private HitmarkerUI hitmarker;
+
+
+    private float nextFireTime;
+
+    private void Reset()
     {
-        [Header("References")]
-        [SerializeField] private Camera playerCamera;
+        // Auto-fill camera when added in editor
+        playerCamera = GetComponentInParent<Camera>();
+    }
 
-        [Header("Shooting")]
-        [SerializeField] private float damage = 25f;
-        [SerializeField] private float range = 200f;
-        [SerializeField] private float fireRate = 8f; // bullets per second
-        [SerializeField] private LayerMask hitMask = ~0; // everything by default
-
-        [Header("Debug")]
-        [SerializeField] private bool drawDebugRay = true;
-
-        [SerializeField] private HitmarkerUI hitmarker;
-
-
-        private float nextFireTime;
-
-        private void Reset()
+    private void Awake()
+    {
+        if (playerCamera == null)
         {
-            // Auto-fill camera when added in editor
             playerCamera = GetComponentInParent<Camera>();
         }
+    }
 
-        private void Awake()
+    private void Update()
+    {
+        HandleShootInput();
+    }
+
+    private void HandleShootInput()
+    {
+        // Old Input System: Fire1 is left click by default
+        bool wantsToShoot = Input.GetButton("Fire1");
+
+        if (!wantsToShoot) return;
+
+        float interval = 1f / fireRate;
+        if (Time.time < nextFireTime) return;
+
+        nextFireTime = Time.time + interval;
+
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+        if (drawDebugRay)
         {
-            if (playerCamera == null)
-            {
-                playerCamera = GetComponentInParent<Camera>();
-            }
+            Debug.DrawRay(ray.origin, ray.direction * range, Color.red, 0.05f);
         }
 
-        private void Update()
+        if (Physics.Raycast(ray, out RaycastHit hit, range, hitMask, QueryTriggerInteraction.Ignore))
         {
-            HandleShootInput();
-        }
-
-        private void HandleShootInput()
-        {
-            // Old Input System: Fire1 is left click by default
-            bool wantsToShoot = Input.GetButton("Fire1");
-
-            if (!wantsToShoot) return;
-
-            float interval = 1f / fireRate;
-            if (Time.time < nextFireTime) return;
-
-            nextFireTime = Time.time + interval;
-
-            Shoot();
-        }
-
-        private void Shoot()
-        {
-            Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-
-            if (drawDebugRay)
+            // Try damage
+            if (hit.collider.TryGetComponent<Health>(out Health health))
             {
-                Debug.DrawRay(ray.origin, ray.direction * range, Color.red, 0.05f);
+                health.TakeDamage(damage);
+                if (hitmarker != null) hitmarker.Show();
             }
 
-            if (Physics.Raycast(ray, out RaycastHit hit, range, hitMask, QueryTriggerInteraction.Ignore))
-            {
-                // Try damage
-                if (hit.collider.TryGetComponent<Health>(out Health health))
-                {
-                    health.TakeDamage(damage);
-                    if (hitmarker != null) hitmarker.Show();
-                }
 
-
-
-                // Optional: tiny feedback hook later (hitmarker, impact decal, etc.)
-            }
         }
     }
 }
+

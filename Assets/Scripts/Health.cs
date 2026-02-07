@@ -1,57 +1,49 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ArenaSurvival.Combat
+
+public class Health : MonoBehaviour
 {
-    public class Health : MonoBehaviour
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float currentHealth;
+
+    public float MaxHealth => maxHealth;
+    public float CurrentHealth => currentHealth;
+    public bool IsDead { get; private set; }
+
+    public UnityEvent onDamaged;
+    public UnityEvent onDied;
+
+    private void Awake()
     {
-        [Header("Health")]
-        [SerializeField] private float maxHealth = 100f;
-        [SerializeField] private float currentHealth;
+        ResetHealth();
+    }
 
-        [Header("Events")]
-        public UnityEvent onDamaged;
-        public UnityEvent onDied;
+    public void ResetHealth()
+    {
+        IsDead = false;
+        currentHealth = maxHealth;
+    }
 
-        public float MaxHealth => maxHealth;
-        public float CurrentHealth => currentHealth;
+    public void TakeDamage(float amount)
+    {
+        if (IsDead) return;
 
-        private bool isDead;
+        currentHealth -= amount;
+        onDamaged?.Invoke();
 
-        private void Awake()
+        if (currentHealth <= 0f)
         {
-            currentHealth = maxHealth;
-        }
-
-        public void ResetHealth()
-        {
-            isDead = false;
-            currentHealth = maxHealth;
-        }
-
-        public void TakeDamage(float amount)
-        {
-            if (isDead) return;
-            if (amount <= 0f) return;
-
-            currentHealth -= amount;
-            onDamaged?.Invoke();
-
-            if (currentHealth <= 0f)
-            {
-                currentHealth = 0f;
-                Die();
-            }
-        }
-
-        private void Die()
-        {
-            if (isDead) return;
-            isDead = true;
-            onDied?.Invoke();
-
-            // Phase 2: simplest death = destroy
-            Destroy(gameObject);
+            currentHealth = 0f;
+            Die();
         }
     }
+
+    private void Die()
+    {
+        if (IsDead) return;
+        IsDead = true;
+        onDied?.Invoke();
+    }
 }
+

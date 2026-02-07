@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 2186383989058039939}
   - component: {fileID: 338694789000868879}
   - component: {fileID: 1953455295664621877}
+  - component: {fileID: 7565024912729653162}
+  - component: {fileID: 2831494089817661070}
+  - component: {fileID: 3267125715003746168}
   m_Layer: 3
   m_Name: EnemyDummy
   m_TagString: Untagged
@@ -132,3 +135,47 @@ MonoBehaviour:
   onDied:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7565024912729653162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169142399380328051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36833aba142fe6d4e971dfbc341f6860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaSurvival.Combat.DestroyOnDeath
+  health: {fileID: 1953455295664621877}
+--- !u!114 &2831494089817661070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169142399380328051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b4466e97c57714d9afed80c3916093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyChase
+  moveSpeed: 3.5
+  stoppingDistance: 1.6
+  target: {fileID: 0}
+--- !u!114 &3267125715003746168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169142399380328051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f55a5593bb3cee64d91882ed2a8b238b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaSurvival.Combat.EnemyMeleeAttack
+  attackRange: 1.6
+  attackDamage: 10
+  attackCooldown: 1
+  target: {fileID: 0}
