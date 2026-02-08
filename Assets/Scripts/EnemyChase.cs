@@ -1,17 +1,23 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class EnemyChase : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 3.5f;
-    [SerializeField] private float stoppingDistance = 1.6f;
+    [SerializeField] private float gravity = -20f;
+    [SerializeField] private float stoppingDistance = 1.5f;
 
     [Header("Target")]
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform target; // optional manual assign
 
-    private void Start()
+    private CharacterController cc;
+    private float verticalVelocity;
+
+    private void Awake()
     {
-        // Auto-find player if not assigned
+        cc = GetComponent<CharacterController>();
+
         if (target == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -23,21 +29,28 @@ public class EnemyChase : MonoBehaviour
     {
         if (target == null) return;
 
+        // --- Horizontal move toward player ---
         Vector3 toTarget = target.position - transform.position;
-        toTarget.y = 0f; // stay horizontal, avoid flying up/down
+        toTarget.y = 0f;
 
-        float distance = toTarget.magnitude;
-        if (distance <= stoppingDistance) return;
+        Vector3 move = Vector3.zero;
 
-        Vector3 dir = toTarget.normalized;
+        if (toTarget.magnitude > stoppingDistance)
+        {
+            Vector3 dir = toTarget.normalized;
+            move = dir * moveSpeed;
 
-        // Move directly toward player
-        transform.position += dir * moveSpeed * Time.deltaTime;
+            // face direction
+            if (dir.sqrMagnitude > 0.001f)
+                transform.rotation = Quaternion.LookRotation(dir);
+        }
 
-        // Face the player
-        if (dir.sqrMagnitude > 0.0001f)
-            transform.rotation = Quaternion.LookRotation(dir);
+        // --- Gravity ---
+        if (cc.isGrounded && verticalVelocity < 0f)
+            verticalVelocity = -2f; // small downward force to "stick" to ground
+        verticalVelocity += gravity * Time.deltaTime;
+
+        Vector3 finalMove = (move + Vector3.up * verticalVelocity) * Time.deltaTime;
+        cc.Move(finalMove);
     }
-
-    public void SetTarget(Transform newTarget) => target = newTarget;
 }

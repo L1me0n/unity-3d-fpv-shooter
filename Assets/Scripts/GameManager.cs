@@ -8,8 +8,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Health playerHealth;
     [SerializeField] private MonoBehaviour[] disableOnDeath; // PlayerController, Gun, etc.
     [SerializeField] private GameOverUI gameOverUI;
+    [SerializeField] private WaveManager waveManager;
 
     private bool isGameOver;
+
 
     private void Awake()
     {
@@ -48,6 +50,8 @@ public class GameManager : MonoBehaviour
         // Disable gameplay scripts
         foreach (var b in disableOnDeath)
             if (b != null) b.enabled = false;
+        
+        waveManager.enabled = false;
 
         // Show UI
         if (gameOverUI != null)

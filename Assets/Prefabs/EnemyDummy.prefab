@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 7565024912729653162}
   - component: {fileID: 2831494089817661070}
   - component: {fileID: 3267125715003746168}
+  - component: {fileID: 2641392311574132605}
+  - component: {fileID: 2797528953442016292}
   m_Layer: 3
   m_Name: EnemyDummy
   m_TagString: Untagged
@@ -179,3 +181,40 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 1
   target: {fileID: 0}
+--- !u!114 &2641392311574132605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169142399380328051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1e12be62a8f47488d8bd11897b58b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeathReporter
+--- !u!143 &2797528953442016292
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169142399380328051}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.8
+  m_Radius: 0.35
+  m_SlopeLimit: 60
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.9, z: 0}
