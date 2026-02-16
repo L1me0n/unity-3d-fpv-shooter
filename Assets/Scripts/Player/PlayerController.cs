@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (ShopManager.Instance != null && ShopManager.Instance.IsOpen)
+            return;
+
         HandleLook();
         HandleMove();
     }

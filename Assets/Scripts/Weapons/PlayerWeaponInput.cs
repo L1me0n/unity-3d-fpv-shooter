@@ -6,6 +6,9 @@ public class PlayerWeaponInput : MonoBehaviour
 
     private void Update()
     {
+        if (ShopManager.Instance != null && ShopManager.Instance.IsOpen)
+            return;
+
         if (!weapon) return;
 
         if (Input.GetMouseButton(0))

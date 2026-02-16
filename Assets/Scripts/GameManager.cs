@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
 
         // Unlock cursor so player can breathe
         LockCursor(false);
+
+        CurrencyManager.Instance.ResetMoney(0);
     }
 
     private void LockCursor(bool locked)

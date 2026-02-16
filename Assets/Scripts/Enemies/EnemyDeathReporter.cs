@@ -9,10 +9,12 @@ public class EnemyDeathReporter : MonoBehaviour
     public static event Action<EnemyDeathReporter> AnyEnemyDied;
 
     private Health health;
+    private EnemyReward reward;
 
     private void Awake()
     {
         health = GetComponent<Health>();
+        reward = GetComponent<EnemyReward>();
         health.onDied.AddListener(HandleDied);
     }
 
@@ -25,5 +27,10 @@ public class EnemyDeathReporter : MonoBehaviour
     private void HandleDied()
     {
         AnyEnemyDied?.Invoke(this);
+
+        if (reward != null && CurrencyManager.Instance != null)
+        {
+            CurrencyManager.Instance.Add(reward.rewardOnKill);
+        }
     }
 }

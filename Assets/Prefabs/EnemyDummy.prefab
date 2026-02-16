@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3267125715003746168}
   - component: {fileID: 2641392311574132605}
   - component: {fileID: 2797528953442016292}
+  - component: {fileID: 9214413673674630092}
   m_Layer: 3
   m_Name: EnemyDummy
   m_TagString: Untagged
@@ -221,3 +222,16 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &9214413673674630092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169142399380328051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a16c4e6550baf34e80cf43812fe4625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyReward
+  rewardOnKill: 1

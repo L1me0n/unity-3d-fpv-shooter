@@ -53,4 +53,15 @@ public class WeaponView : MonoBehaviour
         currentView.transform.localRotation = Quaternion.identity;
         currentView.transform.localScale = Vector3.one;
     }
+
+    public void Apply(WeaponDefinition def)
+    {
+        if (viewSlot == null || def == null) return;
+
+        if (currentView != null)
+            Destroy(currentView);
+
+        if (def.weaponViewPrefab != null)
+            currentView = Instantiate(def.weaponViewPrefab, viewSlot);
+    }
 }

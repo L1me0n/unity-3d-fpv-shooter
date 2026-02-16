@@ -9,9 +9,13 @@ public class WeaponController : MonoBehaviour
 
     [Header("Setup")]
     [SerializeField] private WeaponDefinition def;
+    [SerializeField] private WeaponView weaponView;
     [SerializeField] private Transform muzzle;
     [SerializeField] private Camera aimCamera;      // for player hitscan aim
     [SerializeField] private LayerMask hitMask;
+    [SerializeField] private int bonusMagSize = 0;
+    [SerializeField] private float fireRateMultiplier = 1f; // 1 = normal, 1.25 = 25% faster
+
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -23,6 +27,7 @@ public class WeaponController : MonoBehaviour
     public WeaponDefinition Definition => def;
     public int AmmoInMag => ammoInMag;
     public bool IsReloading => isReloading;
+    public int CurrentMagSize => def.magazineSize + bonusMagSize;
 
     private void Awake()
     {
@@ -35,7 +40,7 @@ public class WeaponController : MonoBehaviour
 
         if (!audioSource) audioSource = GetComponent<AudioSource>(); // auto find ok
 
-        ammoInMag = def.magazineSize;
+        ammoInMag = CurrentMagSize;
         BroadcastAmmo();
     }
 
@@ -43,7 +48,7 @@ public class WeaponController : MonoBehaviour
     public void SetDefinition(WeaponDefinition newDef)
     {
         def = newDef;
-        ammoInMag = def.magazineSize;
+        ammoInMag = CurrentMagSize;
         isReloading = false;
         nextShotTime = 0f;
         BroadcastAmmo();
@@ -62,7 +67,7 @@ public class WeaponController : MonoBehaviour
             return;
         }
 
-        nextShotTime = Time.time + (1f / def.fireRate);
+        nextShotTime = Time.time + (1f / CurrentFireRate);
         ammoInMag--;
         BroadcastAmmo();
 
@@ -78,7 +83,7 @@ public class WeaponController : MonoBehaviour
     {
         if (def == null) return;
         if (isReloading) return;
-        if (ammoInMag == def.magazineSize) return;
+        if (ammoInMag == CurrentMagSize) return;
 
         StartCoroutine(ReloadRoutine());
     }
@@ -92,7 +97,7 @@ public class WeaponController : MonoBehaviour
 
         yield return new WaitForSeconds(def.reloadTime);
 
-        ammoInMag = def.magazineSize;
+        ammoInMag = CurrentMagSize;
         BroadcastAmmo();
 
         isReloading = false;
@@ -128,10 +133,51 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-
-
     private void BroadcastAmmo()
     {
-        OnAmmoChanged?.Invoke(ammoInMag, def.magazineSize);
+        OnAmmoChanged?.Invoke(ammoInMag, CurrentMagSize);
     }
+
+    public void AddBonusMagSize(int amount)
+    {
+        bonusMagSize += Mathf.Max(0, amount);
+
+        ammoInMag = Mathf.Min(ammoInMag, CurrentMagSize);
+    }
+
+    public float CurrentFireRate
+    {
+        get
+        {
+            // assuming WeaponDefinition.fireRate means shots per second
+            return def.fireRate * fireRateMultiplier;
+        }
+    }
+    public void MultiplyFireRate(float multiplier)
+    {
+        // multiplier should be > 1 to increase fire rate
+        if (multiplier <= 1f) return;
+
+        fireRateMultiplier *= multiplier;
+
+        // Optional: clamp so it doesn't become insane
+        fireRateMultiplier = Mathf.Clamp(fireRateMultiplier, 0.1f, 5f);
+    }
+
+    public void Equip(WeaponDefinition newDef)
+    {
+        if (newDef == null) return;
+
+        def = newDef;
+
+        // Reset weapon state safely
+        ammoInMag = CurrentMagSize;   // uses upgraded mag size logic
+        isReloading = false;
+        nextShotTime = 0f;             
+
+        // Refresh view model (if you have WeaponView)
+        if (weaponView != null)
+            weaponView.Apply(newDef);   // method shown below
+    }
+
 }
