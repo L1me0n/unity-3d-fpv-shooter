@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
         // Gravity
         if (controller.isGrounded && verticalVelocity < 0f)
-            verticalVelocity = -2f; // keeps you grounded
+            verticalVelocity = -2f; // keeps player grounded
 
         verticalVelocity += gravity * Time.deltaTime;
 

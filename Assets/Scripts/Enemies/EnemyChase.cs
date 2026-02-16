@@ -6,10 +6,10 @@ public class EnemyChase : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 3.5f;
     [SerializeField] private float gravity = -20f;
-    [SerializeField] private float stoppingDistance = 1.5f;
+    [SerializeField] private float stoppingDistance = 1.2f;
 
     [Header("Target")]
-    [SerializeField] private Transform target; // optional manual assign
+    [SerializeField] private Transform target;
 
     private CharacterController cc;
     private float verticalVelocity;

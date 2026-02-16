@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0498bda5af0c4fb458b8ac14ecc89337, type: 3}
+  m_Name: WD_Pistol_EnemyProjectile
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponDefinition
+  weaponId: pistol
+  displayName: Pistol
+  fireType: 1
+  damage: 6
+  fireRate: 3
+  magazineSize: 12
+  reloadTime: 1.6
+  range: 70
+  projectilePrefab: {fileID: 5155495965897699841, guid: 8ff12e196ae0e984993319e878065619, type: 3}
+  projectileSpeed: 25
+  weaponViewPrefab: {fileID: 3499579067517440869, guid: ff7a47cd0f0925d4ea420c513cb5b9f6, type: 3}
+  shootSfx: {fileID: 0}
+  reloadSfx: {fileID: 0}

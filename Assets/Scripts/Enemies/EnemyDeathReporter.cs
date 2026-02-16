@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class EnemyDeathReporter : MonoBehaviour
 {
+    public enum EnemyKind { CircleMelee, SquareShooter }
+
     public static event Action<EnemyDeathReporter> AnyEnemyDied;
 
     private Health health;

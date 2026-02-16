@@ -55,7 +55,6 @@ public class RampRingBuilder : MonoBehaviour
         float radius = fenceBuilder.Radius;
 
         // Fence height is just the fence segment scale Y (because our segment is a cube scaled in Y).
-        // If your fence segment is 2 units tall, this is 2.
         float fenceHeight = fenceBuilder.SegmentScale.y;
 
         // We want the inner end of ramp to be above the fence top (plus a bit).

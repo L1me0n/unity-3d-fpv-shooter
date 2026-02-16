@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChase
   moveSpeed: 3.5
+  gravity: -20
   stoppingDistance: 1.6
   target: {fileID: 0}
 --- !u!114 &3267125715003746168
@@ -180,7 +181,9 @@ MonoBehaviour:
   attackRange: 1.6
   attackDamage: 10
   attackCooldown: 1
-  target: {fileID: 0}
+  playerHitboxMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &2641392311574132605
 MonoBehaviour:
   m_ObjectHideFlags: 0
