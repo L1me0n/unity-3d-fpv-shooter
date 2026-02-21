@@ -6,6 +6,9 @@ You are trapped inside a **circular fenced arena**. Enemies (simple greybox shap
 
 This project is intentionally **minimal visuals/audio** at first, focusing on strong fundamentals: FPS controls, combat loop, enemies, waves, UI, and clean architecture.
 
+## Play
+- Itch.io (Windows): https://l1me0n.itch.io/shapeattack
+
 ---
 
 ## Core Gameplay Loop
