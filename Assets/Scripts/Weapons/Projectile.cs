@@ -70,6 +70,12 @@ public class Projectile : MonoBehaviour
             return;
         }
 
+        var destructible = other.GetComponentInParent<Destructible>();
+        if (destructible != null)
+        {
+            destructible.TakeDamage(damage); // use projectile damage
+        }
+
         // hit something else: destroy anyway
         Destroy(gameObject);
     }

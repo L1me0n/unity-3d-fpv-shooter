@@ -14,14 +14,22 @@ public class EnemySquareShooterBrain : MonoBehaviour
     [Header("Combat")]
     [SerializeField] private float stopDistance = 12f;  // start shooting here
     [SerializeField] private float chaseDistance = 18f; // if player is far, chase again
-    [SerializeField] private Transform aimPivot;        // optional: where we rotate
+    [SerializeField] private float attackEnableDelay = 0.8f;
+    [SerializeField] private Transform aimPivot;        
+
 
     private float yVel;
 
+    private float spawnTime;
+    private bool canAttack;
+    private Rigidbody rb;
+
     private void Awake()
     {
+        if (!rb) rb = GetComponent<Rigidbody>();
         if (!cc) cc = GetComponent<CharacterController>();
         if (!weapon) weapon = GetComponent<WeaponController>();
+        spawnTime = Time.time;
 
         if (player == null)
         {
@@ -32,6 +40,10 @@ public class EnemySquareShooterBrain : MonoBehaviour
 
     private void Update()
     {
+        // Wait a tiny bit AND avoid shooting while still falling fast
+        bool delayPassed = Time.time >= spawnTime + attackEnableDelay;
+        bool notFallingFast = (rb == null) || (rb.linearVelocity.y > -1.0f);
+
         if (!player) return;
 
         // gravity
@@ -77,7 +89,8 @@ public class EnemySquareShooterBrain : MonoBehaviour
         // shooting: only when inside chaseDistance
         if (dist <= chaseDistance)
         {
-            weapon.TryFire();
+            if (delayPassed && notFallingFast)
+                weapon.TryFire();
         }
     }
 

@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArenaSurvival.Combat.Health
   maxHealth: 50
   currentHealth: 0
+  hurtSfx: {fileID: 8300000, guid: 1115ff1241a9c494886186f1dbe1bb5e, type: 3}
   onDamaged:
     m_PersistentCalls:
       m_Calls: []
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArenaSurvival.Combat.DestroyOnDeath
   health: {fileID: 1953455295664621877}
+  dieSfx: {fileID: 8300000, guid: 378d109c6d48c1349a95d11030b65bba, type: 3}
 --- !u!114 &2831494089817661070
 MonoBehaviour:
   m_ObjectHideFlags: 0

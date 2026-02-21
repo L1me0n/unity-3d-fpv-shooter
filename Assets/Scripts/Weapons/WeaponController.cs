@@ -16,6 +16,11 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private int bonusMagSize = 0;
     [SerializeField] private float fireRateMultiplier = 1f; // 1 = normal, 1.25 = 25% faster
 
+    [SerializeField] private AudioClip reloadSfx;
+    [SerializeField] private AudioClip shootSfx;
+    [SerializeField] private float shootVolume = 0.9f;
+
+
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -38,7 +43,7 @@ public class WeaponController : MonoBehaviour
             return;
         }
 
-        if (!audioSource) audioSource = GetComponent<AudioSource>(); // auto find ok
+        if (!audioSource) audioSource = GetComponent<AudioSource>();
 
         ammoInMag = CurrentMagSize;
         BroadcastAmmo();
@@ -102,12 +107,12 @@ public class WeaponController : MonoBehaviour
 
         isReloading = false;
         OnReloadStateChanged?.Invoke(false);
+        AudioManager.Instance?.Play2D(reloadSfx, 0.9f, 0.98f, 1.02f);
     }
 
     private void FireHitscan()
     {
         // Player uses camera aim. Enemy can set aimCamera to a "fake" camera
-        // OR we can later add an alternative hitscan direction mode.
         Vector3 origin = aimCamera ? aimCamera.transform.position : muzzle.position;
         Vector3 direction = aimCamera ? aimCamera.transform.forward : muzzle.forward;
 
@@ -131,6 +136,7 @@ public class WeaponController : MonoBehaviour
         {
             proj.Init(def.damage, muzzle.forward * def.projectileSpeed, hitMask, transform.root);
         }
+        AudioManager.Instance?.Play2D(shootSfx, shootVolume, 0.95f, 1.05f);
     }
 
     private void BroadcastAmmo()
@@ -160,7 +166,6 @@ public class WeaponController : MonoBehaviour
 
         fireRateMultiplier *= multiplier;
 
-        // Optional: clamp so it doesn't become insane
         fireRateMultiplier = Mathf.Clamp(fireRateMultiplier, 0.1f, 5f);
     }
 
@@ -175,7 +180,7 @@ public class WeaponController : MonoBehaviour
         isReloading = false;
         nextShotTime = 0f;             
 
-        // Refresh view model (if you have WeaponView)
+        // Refresh view model
         if (weaponView != null)
             weaponView.Apply(newDef);   // method shown below
     }

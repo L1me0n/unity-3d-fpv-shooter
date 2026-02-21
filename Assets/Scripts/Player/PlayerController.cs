@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
         move.y = verticalVelocity;
 
         controller.Move(move * Time.deltaTime);
+
     }
 
     private void HandleLook()

@@ -84,7 +84,7 @@ public class FenceRingBuilder : MonoBehaviour
 
     private void ClearGenerated()
     {
-        // Remove only the generated children (safe!)
+        // Remove only the generated children
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             Transform child = transform.GetChild(i);
@@ -105,7 +105,6 @@ public class FenceRingBuilder : MonoBehaviour
     private GameObject InstantiateSegment()
     {
 #if UNITY_EDITOR
-        // In editor, keep prefab connection if possible
         if (!Application.isPlaying)
         {
             var obj = (GameObject)PrefabUtility.InstantiatePrefab(segmentPrefab);

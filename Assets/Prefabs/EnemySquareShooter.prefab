@@ -223,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 50
   currentHealth: 0
+  hurtSfx: {fileID: 8300000, guid: 1115ff1241a9c494886186f1dbe1bb5e, type: 3}
   onDamaged:
     m_PersistentCalls:
       m_Calls: []
@@ -242,11 +243,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   def: {fileID: 11400000, guid: b25d860a46e4af84294c9de456e615f9, type: 2}
+  weaponView: {fileID: 0}
   muzzle: {fileID: 16628578290005860}
   aimCamera: {fileID: 0}
   hitMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
+  bonusMagSize: 0
+  fireRateMultiplier: 1
+  reloadSfx: {fileID: 8300000, guid: 71b0ce3e88cb7ca43b4ca3027aa777d5, type: 3}
+  shootSfx: {fileID: 8300000, guid: 1ed2aad577eec374f80385eabf36486d, type: 3}
+  shootVolume: 0.9
   audioSource: {fileID: 615833591622921665}
 --- !u!114 &6177684014486974260
 MonoBehaviour:
@@ -281,6 +288,7 @@ MonoBehaviour:
   gravity: -18
   stopDistance: 12
   chaseDistance: 18
+  attackEnableDelay: 0.8
   aimPivot: {fileID: 0}
 --- !u!114 &5067411554748934980
 MonoBehaviour:
@@ -306,7 +314,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.804
   m_Pitch: 1
   Loop: 0
@@ -404,6 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyOnDeath
   health: {fileID: 8702858526383131719}
+  dieSfx: {fileID: 8300000, guid: 378d109c6d48c1349a95d11030b65bba, type: 3}
 --- !u!114 &9132045191203271159
 MonoBehaviour:
   m_ObjectHideFlags: 0

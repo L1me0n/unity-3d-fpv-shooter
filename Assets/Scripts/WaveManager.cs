@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    System.Random random = new System.Random();
+
     public enum State
     {
         WaitingToStart,
@@ -19,7 +21,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
 
     [Tooltip("Wave 1 enemy count.")]
-    [SerializeField] private int baseEnemyCount = 5;
+    [SerializeField] private int baseEnemyCount;
 
     [Tooltip("How many more enemies each wave adds.")]
     [SerializeField] private int enemiesAddedPerWave = 3;
@@ -62,6 +64,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        baseEnemyCount = random.Next(5, 9);
         StartCoroutine(WaveLoop());
     }
 

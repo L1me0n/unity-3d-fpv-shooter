@@ -124,22 +124,13 @@ This project is designed to practice:
 - Added square ranged enemy that shoots projectiles
 - Added `PlayerHurtbox` to make projectile/melee damage reliable
 
-### Phase 6 - Economy + Shop + Exploding Covers + Sound (Next)
+### Phase 6 - Economy + Shop + Exploding Covers + Sound (Done)
 **Goal:** add progression and "gamey" depth.
 - Money rewards on kill (circle +1, square +2)
 - Shop UI (CS-style, open with E)
 - Weapon upgrades (faster fire / bigger magazine, new weapon views)
 - Triangle covers that spawn after X waves, have HP, and explode on destruction
 - Sound pass (shooting, reload, footsteps) + small combat polish
-
----
-
-## Stretch Goals (Optional)
-- Boss wave every 5 waves
-- Simple perk choices between waves
-- Multiple arena layouts
-- Object pooling for enemies/projectiles
-- More enemy types (tank/fast)
 
 ---
 
